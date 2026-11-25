@@ -1,0 +1,10 @@
+system,run_type,runs,classes_attaque,taux
+Baseline 1 : ML seul,benign_burst,3,0,0.0
+Baseline 1 : ML seul,benign_restart,3,0,0.0
+Baseline 1 : ML seul,normal,4,0,0.0
+Baseline 2 : ML + LLM/RAG,benign_burst,3,0,0.0
+Baseline 2 : ML + LLM/RAG,benign_restart,3,0,0.0
+Baseline 2 : ML + LLM/RAG,normal,4,0,0.0
+EVA-Guard,benign_burst,3,0,0.0
+EVA-Guard,benign_restart,3,0,0.0
+EVA-Guard,normal,4,0,0.0

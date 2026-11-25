@@ -1,0 +1,12 @@
+t,peer_count,peer_churn,peer_diversity,single_source_ratio,msgs_in,bytes_in,cpu,mem,net_io,rpc_latency,rpc_error,sync_lag
+0,nan,nan,nan,nan,nan,nan,nan,nan,nan,nan,1.0,nan
+1,nan,nan,nan,nan,nan,nan,nan,nan,nan,nan,1.0,nan
+2,nan,nan,nan,nan,nan,nan,nan,nan,nan,nan,1.0,nan
+3,nan,nan,nan,nan,nan,nan,nan,nan,nan,nan,1.0,nan
+4,nan,nan,nan,nan,nan,nan,nan,nan,nan,nan,1.0,nan
+5,nan,nan,nan,nan,nan,nan,nan,nan,nan,nan,1.0,nan
+6,nan,nan,nan,nan,nan,nan,nan,nan,nan,nan,1.0,nan
+7,nan,nan,nan,nan,nan,nan,nan,nan,nan,nan,1.0,nan
+8,nan,nan,nan,nan,nan,nan,nan,nan,nan,nan,1.0,nan
+9,nan,nan,nan,nan,nan,nan,nan,nan,nan,nan,1.0,nan
+10,nan,nan,nan,nan,nan,nan,nan,nan,nan,nan,1.0,nan

@@ -1,0 +1,75 @@
+# EVA-Guard avec Docker
+#   docker compose run --rm tests            # 8 tests unitaires
+#   docker compose run --rm evaluate         # évaluation (5 graines, ~20 min) + figures + dashboard.html + PDF
+#   docker compose run --rm figures          # régénère figures, dashboard.html et PDF depuis results/ (rapide)
+#   docker compose up dashboard              # dashboard interactif sur http://localhost:8501
+#   docker compose --profile node up -d      # nœud Geth instrumenté + Prometheus + collecteur réel (voir README)
+services:
+  tests:
+    build: .
+    command: python -m pytest -q tests -p no:cacheprovider
+
+  evaluate:
+    build: .
+    command: python run_all.py
+    volumes:
+      - ./results:/app/results
+      - ./report:/app/report
+      - ./dashboard:/app/dashboard
+
+  figures:
+    build: .
+    command: python run_all.py --figures
+    volumes:
+      - ./results:/app/results
+      - ./report:/app/report
+      - ./dashboard:/app/dashboard
+
+  realcheck:                       # contrôle des fausses alertes sur vos runs réels (results/runs/manifest.csv)
+    build: .
+    command: python -m eva_guard.real_check --manifest results/runs/manifest.csv
+    environment:
+      - EVA_DROP_FEATURES=single_source_ratio,msgs_in,bytes_in,net_io
+    volumes:
+      - ./results:/app/results
+
+  dashboard:
+    build: .
+    command: streamlit run dashboard/app.py --server.port 8501 --server.address 0.0.0.0 --browser.gatherUsageStats false
+    ports:
+      - "8501:8501"
+    volumes:
+      - ./results:/app/results:ro
+
+  # ---- Nœud réel instrumenté (profil optionnel) ----
+  geth:
+    profiles: ["node"]
+    image: ethereum/client-go:stable
+    # Mode --dev : réseau local à un seul nœud, isolé d'Internet (pas de pairs : voir README pour un vrai réseau P2P)
+    command: >
+      --dev --dev.period 2
+      --http --http.addr 0.0.0.0 --http.port 8545 --http.vhosts=* --http.api eth,net,web3,admin,txpool
+      --metrics --metrics.addr 0.0.0.0 --metrics.port 6060
+      --nodiscover
+    ports:
+      - "127.0.0.1:8545:8545"
+      - "127.0.0.1:6060:6060"      # métriques Prometheus de Geth (pour le collecteur lancé depuis l'hôte)
+
+  prometheus:
+    profiles: ["node"]
+    image: prom/prometheus:latest
+    volumes:
+      - ./infra/prometheus.docker.yml:/etc/prometheus/prometheus.yml:ro
+    ports:
+      - "127.0.0.1:9090:9090"
+    depends_on: [geth]
+
+  collector:
+    profiles: ["node"]
+    build: .
+    command: >
+      python collectors/collector.py --rpc http://geth:8545
+      --metrics http://geth:6060/debug/metrics/prometheus --out results/real_run.csv --duration 3600
+    volumes:
+      - ./results:/app/results
+    depends_on: [geth]

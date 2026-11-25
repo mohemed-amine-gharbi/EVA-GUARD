@@ -1,0 +1,11 @@
+# Réseau Ethereum privé pour Kurtosis (ethpandaops/ethereum-package) — 3 nœuds, isolé en local.
+# Lancement : kurtosis run github.com/ethpandaops/ethereum-package --args-file infra/network_params.yaml
+# (non testé dans ce dépôt : à valider sur votre machine ; adaptez les noms de paramètres à la version du package)
+participants:
+  - el_type: geth
+    cl_type: lighthouse
+    count: 3
+network_params:
+  network_id: "3151908"
+additional_services:
+  - prometheus_grafana

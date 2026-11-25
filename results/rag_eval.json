@@ -1,0 +1,47 @@
+{
+ "example": {
+  "symptoms": "diversité des pairs très faible, blocs reçus d'un seul pair, churn de pairs normal, nombre de pairs normal, retard de synchronisation, flux de messages normal, CPU normal, mémoire stable, latence RPC normale, aucune erreur RPC",
+  "retrieved": [
+   [
+    "eclipse",
+    "eclipse",
+    0.413
+   ],
+   [
+    "restart_resync",
+    "benign_restart",
+    0.289
+   ],
+   [
+    "legit_burst",
+    "benign_burst",
+    0.244
+   ]
+  ],
+  "hyp": "eclipse",
+  "conf": 0.41273045547661813
+ },
+ "table": {
+  "benign": {
+   "benign_burst": 22,
+   "benign_maintenance": 19,
+   "benign_restart": 41,
+   "dos_p2p": 12,
+   "eclipse": 0
+  },
+  "dos_p2p": {
+   "benign_burst": 0,
+   "benign_maintenance": 24,
+   "benign_restart": 0,
+   "dos_p2p": 78,
+   "eclipse": 0
+  },
+  "eclipse": {
+   "benign_burst": 0,
+   "benign_maintenance": 1,
+   "benign_restart": 4,
+   "dos_p2p": 0,
+   "eclipse": 79
+  }
+ }
+}
