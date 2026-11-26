@@ -16,6 +16,9 @@ import streamlit as st
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
+from eva_guard._autodrop import autodrop   # noqa: E402  (doit précéder l'import de config : retire les colonnes vides de vos runs réels)
+if (ROOT / "results" / "runs" / "manifest.csv").exists():
+    autodrop(str(ROOT / "results" / "runs" / "manifest.csv"))
 from eva_guard.config import FEATURES, DESCRIPTION, SOURCE, CATALOG   # noqa: E402
 
 st.set_page_config(page_title="EVA-Guard", layout="wide", page_icon="🛡️")

@@ -20,8 +20,9 @@ SYSTEMS = [("Baseline 1 : ML seul", "ml_only"), ("Baseline 2 : ML + LLM/RAG", "m
 
 
 def load_params(seed):
+    from . import config
     f = RESULTS / "selected_params.csv"
-    if f.exists():
+    if f.exists() and len(config.FEATURES) == 12:       # paramètres appris avec les 12 métriques ; sinon recalibrage
         p = pd.read_csv(f)
         row = p[p.seed == seed]
         if len(row):
